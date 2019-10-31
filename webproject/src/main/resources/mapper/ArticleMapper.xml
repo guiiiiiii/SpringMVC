@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.neobns.mapper.ArticleMapper">
+
+
+	<sql id='search'>
+   <if test="search.s_atc_type != null and search.s_atc_type !=''">
+         and (atc_type = #{search.s_atc_type})
+      </if>
+      <if test="search.s_atc_writer != null and search.s_atc_writer !=''">
+         and (user_id  like '%'||#{search.s_atc_writer}||'%')
+      </if>
+      <if test="search.s_atc_title != null and search.s_atc_title !=''">
+         and (atc_title like '%'||#{search.s_atc_title}||'%')
+      </if>
+      <if test="search.s_start_dt != null and search.s_start_dt !=''">
+         <![CDATA[ and (atc_reg_dt>= '${search.s_start_dt}'||'00:00:00')   ]]>   
+      </if>
+      <if test="search.s_finish_dt != null and search.s_finish_dt !=''">
+         <![CDATA[ and (atc_reg_dt<= '${search.s_finish_dt}'||'23:59:59') ]]>   
+      </if>
+
+</sql>
+
+	<select id="getSearch" resultType="com.neobns.domain.ArticleVO">
+	<![CDATA[
+	select atc_seq, atc_type, case when length(atc_title)>=6 then 
+            substr(atc_title,1,8)||'..'
+            else atc_title end atc_title, atc_content, atc_writer, atc_hits from (
+	select
+	(rank() over(order by atc_seq desc)) rn, atc_seq, code_nm as atc_type, atc_title, atc_content, user_id as atc_writer, atc_hits, atc_hide_yn from tb_article atc join TB_COM_CODE co on atc.atc_type=co.COM_CODE join TB_USER us on atc.atc_writer=us.USER_SEQ
+	where atc_hide_yn='N'
+		]]>
+		<include refid='search'></include>
+	<![CDATA[
+		) 
+		where rn > (#{paging.curPage}-1)*#{paging.cntPerPage} and rn<= #{paging.curPage}*#{paging.cntPerPage}
+]]>
+	</select>
+
+
+	<select id='getSearchCnt' resultType='int'>
+<![CDATA[select count(*) from tb_article atc join TB_USER us on atc.atc_writer=us.USER_SEQ 
+where ATC_HIDE_YN='N']]>
+		<include refid='search'></include>
+
+	</select>
+
+	<insert id="insert">
+		insert into tb_article (atc_seq, atc_type, atc_title, atc_content,
+		atc_writer)
+		values(SEQ_ATC.nextval, #{atc_type}, #{atc_title}, #{atc_content}, #{atc_writer})
+	</insert>
+
+	<insert id="insertSelectKey">
+		<selectKey keyProperty="atc_seq" order="BEFORE"
+			resultType="long">
+			select seq_atc.nextval from dual
+		</selectKey>
+		insert into tb_article (atc_seq, atc_type, atc_title, atc_content,
+		atc_writer, file_name, file_path)
+		values(SEQ_ATC.nextval, #{atc_type}, #{atc_title}, #{atc_content}, (select user_seq from
+		tb_user where user_id=#{atc_writer}), #{file_name}, #{file_path})
+	</insert>
+
+	<select id="detail" resultType="com.neobns.domain.ArticleVO">
+		select atc_seq, code_nm as atc_type, atc_title, atc_content, user_id as
+		atc_writer, atc_reg_dt, atc_hits, file_name, file_path from tb_article
+		atc join TB_COM_CODE co on atc.atc_type=co.COM_CODE join TB_USER us on
+		atc.atc_writer=us.USER_SEQ where atc_seq=#{atc_seq}
+	</select>
+
+	<update id="delete">
+		update tb_article set atc_hide_yn='Y' where atc_seq=#{atc_seq}
+	</update>
+
+	<update id="update">
+		update tb_article set atc_title=#{atc_title},
+		atc_content=#{atc_content},
+		file_name=#{file_name},
+		file_path=#{file_path}
+		where atc_seq=#{atc_seq}
+	</update>
+
+	<update id="updateCnt">
+		update tb_article set atc_hits=atc_hits+1
+		where atc_seq=#{atc_seq}
+	</update>
+
+	<select id="getArticleType"
+		resultType="com.neobns.domain.ComCodeVO">
+		select code_nm, code_en_nm, com_code from TB_COM_CODE where
+		MASTER_COM_CODE='CD01'
+	</select>
+
+	<select id='getWriter' resultType='String'>
+		select user_id from tb_article atc join tb_user us on
+		atc.ATC_WRITER=us.USER_seq where atc_seq=#{atc_seq}
+	</select>
+
+</mapper>

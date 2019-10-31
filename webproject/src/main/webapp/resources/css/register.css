@@ -1,0 +1,16 @@
+@charset "UTF-8";
+
+
+.wrap_reg_header{height: 100px; line-height: 100px; width: 100%; text-align: center;}
+.wrap_reg_header .txt_header{font-size: 30px; font-weight: 900;}
+
+.wrap_reg_form{padding: 10px; line-height: normal;}
+.wrap_reg_form .reg_row{margin: auto; width: 100%; width: 80%; margin: auto; height: 100px;}
+.wrap_reg_form .reg_row .txt_title{font-size: 15px; font-weight: bold;}
+.wrap_reg_form .reg_row .input{width: 95%; height: 35px; line-height: 35px; border: none; background-color: white; font-size: 15px; padding: 10px; border: solid 1px #dadada; margin: 5px 0px 0px 0px; border-radius: 5px; border-radius: 10px;}
+.wrap_reg_form .reg_row .select{width: 99%; height: 55px; line-height: 35px; border: none; background-color: white; font-size: 15px; padding: 10px; border: solid 1px #dadada; margin: 5px 0px 0px 0px; border-radius: 5px; border-radius: 10px;}
+.wrap_reg_form .reg_row .input_submit{width: 99%; height: 70px; line-height: 70px; border: none; background-color: #f36c3e; font-size: 25px; font-weight: bold; color: white; padding-left: 10px; border: solid 1px #dadada; border-radius: 10px; margin: 20px 0px 0px 0px;}
+
+#chk_row{width:80%;  margin: auto; height: 30px; font-weight: 700; }
+#chk_pw{}
+#chk_id{color: red;}

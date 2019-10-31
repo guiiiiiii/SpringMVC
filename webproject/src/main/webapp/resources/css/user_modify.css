@@ -1,0 +1,11 @@
+@charset "UTF-8";
+
+.wrap_con_all{width: 800px; margin: 0 auto; color:#505050;}
+.wrap_con_all .wrap_content{height: 650px; text-align: center; padding: 10px; margin: 50px; }
+
+.wrap_con_all .wrap_content .wrap_modify{border: 1px solid #a7a7a7;}
+
+
+.wrap_con_all .wrap_content .wrap_modify .modify_row{height: 50px; text-align: initial; line-height: 50px; padding: 5px 10px;}
+.wrap_con_all .wrap_content .wrap_modify .modify_row .modify_title{float: left; height: 50px; font-size: 15px; font-weight: bold;  width: 200px; text-align: center;}
+

@@ -1,0 +1,43 @@
+@charset "UTF-8";
+
+#line{margin: 0px; border: black 0 none; border-top: #a7a7a7 1px solid; border-style: dashed;}
+#text{width: 100%; height: 100%; background-color: transparent; border: 0; resize: none; }
+#atc_type{    font-weight: normal; font-size: 12px;}
+#atc_title{width: 520px;}
+#file{background: transparent; border: none;}
+
+.wrap_con_all{width: 800px; margin: 0 auto; color:#505050;}
+
+.wrap_con_all .wrap_content .wrap_top_menu {text-align: left; padding: 0px 10px; font-size: 12px; height: 35px; line-height: 35px;}
+.wrap_con_all .wrap_content .wrap_top_menu .back{float: left; font-weight: bold; margin-left: 15px;}
+.wrap_con_all .wrap_content .wrap_top_menu .modify{float: right; font-weight: bold;}
+.wrap_con_all .wrap_content .wrap_top_menu .delete{float: right; margin-right: 15px; font-weight: bold;}
+
+
+.wrap_con_all .wrap_content{height: 650px; text-align: center; padding: 10px; margin: 50px; }
+.wrap_con_all .wrap_content .wrap_modify{border: 1px solid #a7a7a7;}
+
+.wrap_con_all .wrap_content .wrap_type{ height: 50px; text-align: initial; line-height: 50px; padding: 5px 10px; }
+.wrap_con_all .wrap_content .wrap_type .type{float: left; height: 50px; font-size: 15px; font-weight: bold; width: 100px; text-align: center;}
+.wrap_con_all .wrap_content .wrap_type .atc_type{height: 50px;}
+
+
+.wrap_con_all .wrap_content .wrap_title{ height: 50px; text-align: initial; line-height: 50px; padding: 5px 10px; }
+.wrap_con_all .wrap_content .wrap_title .title{float: left; height: 50px; font-size: 15px; font-weight: bold; width: 100px; text-align: center;}
+.wrap_con_all .wrap_content .wrap_title .atc_title{}
+
+.wrap_con_all .wrap_content .wrap_writer{ height: 50px; text-align: initial; line-height: 50px; padding: 5px 10px;}
+.wrap_con_all .wrap_content .wrap_writer .writer{float: left; height: 50px; font-size: 15px; font-weight: bold;  width: 100px; text-align: center;}
+.wrap_con_all .wrap_content .wrap_writer .atc_writer{background: transparent; border: none;}
+
+.wrap_con_all .wrap_content .wrap_atc_file{ height: 30px; text-align: initial; line-height: 30px; padding: 5px 10px;}
+.wrap_con_all .wrap_content .wrap_atc_file .file{float: left; height: 30px; font-size: 15px; font-weight: bold;  width: 100px; text-align: center;}
+
+.wrap_con_all .wrap_content .wrap_atc_content{text-align: initial; text-align: center; padding: 5px 10px; line-height: 30px;}
+.wrap_con_all .wrap_content .wrap_atc_content .txt_content{float: left; height: 30px; font-size: 15px; font-weight: bold;  width: 100px; text-align: center;}
+.wrap_con_all .wrap_content .wrap_atc_content .atc_content{width: 100%; height: 100%;  text-align: initial; resize: none;}
+
+.wrap_con_all .wrap_content .wrap_atc_content .atc_content .wrap_bottom_menu{text-align: center;}
+
+.writehBtn{border: none; cursor: pointer; height: 30px; background-color: transparent; margin: 0px 50px; font-weight: bold;}
+.resetBtn{border: none; cursor: pointer; height: 30px; background-color: transparent; margin: 0px 50px; font-weight: bold;}

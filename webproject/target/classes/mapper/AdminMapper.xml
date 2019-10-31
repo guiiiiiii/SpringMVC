@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.neobns.mapper.AdminMapper">
+
+<sql id='search1'>
+	<where>
+			<if test="list != null">
+				<trim prefix="AND">
+					<foreach collection="list" item="item" index="index"
+						separator="AND">
+						<if test="index == 0">
+							<if test="item.keyword != null and item.keyword!=''">
+								${item.type} LIKE '%${item.keyword}%'
+							</if>
+						</if>
+						<if test="index == 1">
+							<if test="item.keyword != null and item.keyword!=''">
+								${item.type} LIKE '%${item.keyword}%'
+							</if>
+						</if>
+						<if test="index == 2">
+							<if test="item.keyword != null and item.keyword!=''">
+								${item.type} = #{item.keyword}
+							</if>
+						</if>
+						<if test="index == 3">
+							<if test="item.keyword != null and item.keyword!=''">
+								${item.type} = #{item.keyword}
+							</if>
+						</if>
+					</foreach>
+				</trim>
+			</if>
+		</where>
+</sql>
+
+
+<sql id='search'>
+	<where>
+   <if test="search.s_user_id != null and search.s_user_id !=''">
+         and (user_id like '%'||#{search.s_user_id}||'%')
+      </if>
+      <if test="search.s_user_name != null and search.s_user_name !=''">
+         and (user_name  like '%'||#{search.s_user_name}||'%')
+      </if>
+      <if test="search.s_user_gender != null and search.s_user_gender !=''">
+         and (user_gender = #{search.s_user_gender})
+      </if>
+      <if test="search.s_user_use_state != null and search.s_user_use_state !=''">
+         and (user_gender = #{search.s_user_gender})
+      </if>
+      <if test="search.s_start_dt != null and search.s_start_dt !=''">
+         <![CDATA[ and (user_reg_dt>= '${search.s_start_dt}'||'00:00:00')   ]]>   
+      </if>
+      <if test="search.s_finish_dt != null and search.s_finish_dt !=''">
+         <![CDATA[ and (user_reg_dt<= '${search.s_finish_dt}'||'23:59:59') ]]>   
+      </if>
+</where>
+</sql>
+
+
+	<select id="getUserList"
+		parameterType="com.neobns.domain.PageMakerVO" resultType="userVO">
+		<![CDATA[
+			SELECT *
+			FROM (SELECT (rank() over(order by user_seq desc)) rn, USER_SEQ, USER_ID, USER_NAME, USER_GENDER, USER_USE_STATE, USER_AUTHORITY
+			        FROM TB_USER   
+			        ]]>
+	<include refid='search'></include>
+		<![CDATA[	        
+			  )
+			WHERE RN > (#{paging.curPage}-1) * #{paging.cntPerPage} and RN<=#{paging.curPage} * #{paging.cntPerPage} order by rn desc
+		]]>
+	</select>
+
+	<select id='getSearchList' resultType='com.neobns.domain.UserVO'>
+		<![CDATA[
+			SELECT USER_SEQ, USER_ID, USER_NAME, USER_GENDER, USER_USE_STATE, USER_AUTHORITY FROM (SELECT (rank() over(order by user_seq desc)) rn, USER_SEQ, USER_ID, USER_NAME, USER_GENDER, USER_USE_STATE, USER_AUTHORITY FROM TB_USER 
+			      ) where RN > (#{paging.curPage}-1) * #{paging.cntPerPage} and RN<=#{paging.curPage} * #{paging.cntPerPage}
+			        ]]>
+	</select>
+
+	<select id='getUserCnt' resultType='long'>
+		<![CDATA[
+		SELECT COUNT(*)
+		FROM TB_USER ]]>
+		<include refid='search'></include>
+	</select>
+
+	<update id="updateUserState" parameterType="String">
+		UPDATE TB_USER
+		SET
+		USER_USE_STATE = #{user_use_state}
+		WHERE USER_SEQ = #{user_seq}
+	</update>
+</mapper>
